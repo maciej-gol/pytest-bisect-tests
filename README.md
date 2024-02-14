@@ -53,3 +53,8 @@ options:
                         This is useful when, for example, you have a test grouping plugin that affects the tests run.
   --stdout              If passed, pytest output will be shown.
 ```
+
+## Alternatives
+[detect-test-pollution](https://github.com/asottile/detect-test-pollution), an alternative package with similar functionality.
+Lacks passing pytest run and collect options or showing the output from pytest. It also doesn't support pytest plugins that alter
+how tests are collected (like [pytest-test-groups](https://github.com/mark-adams/pytest-test-groups)).
