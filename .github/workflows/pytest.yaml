@@ -1,0 +1,29 @@
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt && pip install -e .
+
+    - name: Run pytest
+      run: pytest --junitxml=report.xml
+
+    - name: Publish Test Report
+      uses: actions/upload-artifact@v3
+      if: always()  # Ensures that the report is published even if pytest fails
+      with:
+        name: pytest-reports
+        path: report.xml
