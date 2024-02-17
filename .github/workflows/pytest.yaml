@@ -1,0 +1,24 @@
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: python:3.10
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: pip install -r requirements.txt; fi
+
+    - name: Run pytest
+      run: pytest --junitxml=report.xml
+
+    - name: Publish Test Report
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: pytest-reports
+        path: report.xml
