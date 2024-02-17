@@ -26,7 +26,7 @@ Running 2 tests.
 Faulty test: faulty_test.py::test_faulty
 ```
 
-Comparison of UX:
+## Comparison of UX
 
 Standalone script:
 [![asciicast](https://asciinema.org/a/ONa6xL49QAvpPT4XPMMFDe367.svg)](https://asciinema.org/a/ONa6xL49QAvpPT4XPMMFDe367)
