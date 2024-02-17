@@ -3,3 +3,5 @@ pip-tools
 build
 pytest
 pytest-test-groups
+
+-e .
