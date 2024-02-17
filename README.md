@@ -2,6 +2,8 @@
 
 Sometimes one test can affect the execution of another test. This simple script tries to find the offender.
 
+This script can be called as standalone script, or via pytest option.
+
 Example:
 
 ```python
@@ -24,6 +26,14 @@ Running 2 tests.
 Faulty test: faulty_test.py::test_faulty
 ```
 
+Comparison of UX:
+
+Standalone script:
+[![asciicast](https://asciinema.org/a/ONa6xL49QAvpPT4XPMMFDe367.svg)](https://asciinema.org/a/ONa6xL49QAvpPT4XPMMFDe367)
+
+pytest option:
+[![asciicast](https://asciinema.org/a/FLwgOSMhQyT30pkn2iOxh3qjN.svg)](https://asciinema.org/a/FLwgOSMhQyT30pkn2iOxh3qjN)
+
 ## Installation
 
 ```shell
@@ -32,6 +42,7 @@ $ pip install pytest-bisect-tests
 
 ## Usage
 
+### Standalone script
 ```shell
 $ pytest-bisect-tests --failing-test "<identifier of the test as pytest shows them with -v>"
 ```
@@ -52,6 +63,14 @@ options:
                         Arguments that will be passed to pytest during tests collection. A single string.
                         This is useful when, for example, you have a test grouping plugin that affects the tests run.
   --stdout              If passed, pytest output will be shown.
+```
+
+### As pytest option
+
+This approach automatically discovers all tests in the suite and failing test, so it has minimal input options.
+
+```shell
+$ pytest --bisect-first-failure
 ```
 
 ## Alternatives
