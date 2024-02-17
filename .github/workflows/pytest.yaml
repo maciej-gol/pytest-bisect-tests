@@ -6,10 +6,15 @@ on:
 
 jobs:
   build:
-    runs-on: python:3.10
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
     - name: Install dependencies
       run: pip install -r requirements.txt
 
@@ -18,7 +23,7 @@ jobs:
 
     - name: Publish Test Report
       uses: actions/upload-artifact@v3
-      if: always()
+      if: always()  # Ensures that the report is published even if pytest fails
       with:
         name: pytest-reports
         path: report.xml
