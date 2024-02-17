@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install dependencies
-      run: pip install -r requirements.txt; fi
+      run: pip install -r requirements.txt
 
     - name: Run pytest
       run: pytest --junitxml=report.xml
