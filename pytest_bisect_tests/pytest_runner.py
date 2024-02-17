@@ -2,7 +2,7 @@ from io import BytesIO
 import os
 import shlex
 import subprocess
-from typing import List
+from typing import List, Optional
 
 
 class PytestRunner:
@@ -17,27 +17,9 @@ class PytestRunner:
         self.__stdout = None if stdout else subprocess.DEVNULL
 
     def run(self, test_names: List[str]) -> bool:
-        print("Running", len(test_names), "tests.")
-        r, w = os.pipe()
-        os.set_inheritable(r, True)
-        try:
-            p = subprocess.Popen(
-                [
-                    "pytest",
-                    "--quiet",
-                    "--bisect-tests-ids-from-fd",
-                    str(r),
-                    *self.__run_options,
-                ],
-                close_fds=False,
-                stdout=self.__stdout,
-                stderr=subprocess.DEVNULL,
-            )
-            os.write(w, "\n".join(test_names).encode())
-            os.close(w)
-            return p.wait() == 0
-        finally:
-            os.closerange(r, w)
+        return run_pytest_with_test_names(
+            test_names=test_names, args=["pytest", "--quiet"], stdout=self.__stdout
+        )
 
     def collect_tests(self) -> List[str]:
         r, w = os.pipe()
@@ -61,3 +43,27 @@ class PytestRunner:
                 return [l.strip() for l in f.readlines()]
         finally:
             os.closerange(r, w)
+
+
+def run_pytest_with_test_names(
+    test_names: List[str], args: List[str], stdout: Optional[int]
+) -> bool:
+    print("Running", len(test_names), "tests.")
+    r, w = os.pipe()
+    os.set_inheritable(r, True)
+    try:
+        p = subprocess.Popen(
+            [
+                *args,
+                "--bisect-tests-ids-from-fd",
+                str(r),
+            ],
+            close_fds=False,
+            stdout=stdout,
+            stderr=subprocess.DEVNULL,
+        )
+        os.write(w, "\n".join(test_names).encode())
+        os.close(w)
+        return p.wait() == 0
+    finally:
+        os.closerange(r, w)

@@ -24,7 +24,9 @@ def main() -> None:
             "This is useful when, for example, you have a test grouping plugin that affects the tests run."
         ),
     )
-    parser.add_argument("--stdout", action="store_true", help="If passed, pytest output will be shown.")
+    parser.add_argument(
+        "--stdout", action="store_true", help="If passed, pytest output will be shown."
+    )
     args = parser.parse_args()
 
     pytest_runner = PytestRunner(
