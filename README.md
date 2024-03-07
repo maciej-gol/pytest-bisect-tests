@@ -29,7 +29,7 @@ Faulty test: faulty_test.py::test_faulty
 ## Comparison of UX
 
 Standalone script:
-[![asciicast](https://asciinema.org/a/ONa6xL49QAvpPT4XPMMFDe367.svg)](https://asciinema.org/a/ONa6xL49QAvpPT4XPMMFDe367)
+[![asciicast](https://asciinema.org/a/wLxhvndvw912zjRYBM2mr3uTG.svg)](https://asciinema.org/a/wLxhvndvw912zjRYBM2mr3uTG)
 
 pytest option:
 [![asciicast](https://asciinema.org/a/FLwgOSMhQyT30pkn2iOxh3qjN.svg)](https://asciinema.org/a/FLwgOSMhQyT30pkn2iOxh3qjN)
