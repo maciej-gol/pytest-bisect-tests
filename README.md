@@ -32,9 +32,9 @@ Standalone script:
 [![asciicast](https://asciinema.org/a/wLxhvndvw912zjRYBM2mr3uTG.svg)](https://asciinema.org/a/wLxhvndvw912zjRYBM2mr3uTG)
 
 pytest option:
-[![asciicast](https://asciinema.org/a/FLwgOSMhQyT30pkn2iOxh3qjN.svg)](https://asciinema.org/a/FLwgOSMhQyT30pkn2iOxh3qjN)
-
+[![asciicast](https://asciinema.org/a/EudozjTNeML0X18uhgbHO6hda.svg)](https://asciinema.org/a/EudozjTNeML0X18uhgbHO6hda)
 ## Installation
+
 
 ```shell
 $ pip install pytest-bisect-tests
