@@ -25,7 +25,7 @@ class PytestRunner:
         r, w = os.pipe()
         os.set_inheritable(w, True)
         try:
-            subprocess.check_call(
+            process = subprocess.Popen(
                 [
                     "pytest",
                     "--collect-only",
@@ -40,7 +40,10 @@ class PytestRunner:
             )
             os.close(w)
             with os.fdopen(r, closefd=False) as f:
-                return [l.strip() for l in f.readlines()]
+                tests = [l.strip() for l in f.readlines()]
+            if process.wait() != 0:
+                raise RuntimeError("Failed to collect tests.")
+            return tests
         finally:
             os.closerange(r, w)
 
