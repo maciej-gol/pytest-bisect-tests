@@ -14,7 +14,7 @@ class PytestRunner:
     ) -> None:
         self.__run_options = shlex.split(run_options) if run_options else []
         self.__collect_options = shlex.split(collect_options) if collect_options else []
-        self.__stdout = None if stdout else subprocess.DEVNULL
+        self.__stdout = stdout
 
     def run(self, test_names: List[str]) -> bool:
         return run_pytest_with_test_names(
@@ -35,14 +35,19 @@ class PytestRunner:
                     *self.__collect_options,
                 ],
                 close_fds=False,
-                stdout=self.__stdout,
-                stderr=subprocess.DEVNULL,
+                stdin=subprocess.PIPE,
+                stderr=subprocess.PIPE,
             )
             os.close(w)
             with os.fdopen(r, closefd=False) as f:
                 tests = [l.strip() for l in f.readlines()]
-            if process.wait() != 0:
-                raise RuntimeError("Failed to collect tests.")
+            stdout, stderr = process.communicate()
+            if self.__stdout:
+                print(stdout.decode())
+            if process.returncode != 0:
+                raise RuntimeError(
+                    f"Failed to collect tests:\n{stderr.decode()}"
+                )
             return tests
         finally:
             os.closerange(r, w)
