@@ -1,8 +1,10 @@
 import argparse
+import sys
 from pytest_bisect_tests.bisect import run_bisect
 
 from pytest_bisect_tests.pytest_runner import (
     PytestRunner,
+    TestCollectionError,
 )
 
 
@@ -34,8 +36,17 @@ def main() -> None:
         collect_options=args.collect_options,
         stdout=args.stdout,
     )
+    try:
+        test_names = pytest_runner.collect_tests()
+    except TestCollectionError:
+        if not args.stdout:
+            print("Failed to collect tests. Use --stdout to see the output from pytest test collection.")
+        else:
+            print("Failed to collect tests. Consult output from pytest.")
+        sys.exit(1)
+
     result = run_bisect(
-        test_names=pytest_runner.collect_tests(),
+        test_names=test_names,
         failing_test=args.failing_test,
         test_runner=pytest_runner.run,
     )

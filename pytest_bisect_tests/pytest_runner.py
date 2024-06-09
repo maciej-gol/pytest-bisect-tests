@@ -4,6 +4,9 @@ import shlex
 import subprocess
 from typing import List, Optional
 
+class TestCollectionError(Exception):
+    pass
+
 
 class PytestRunner:
     def __init__(
@@ -42,7 +45,7 @@ class PytestRunner:
             with os.fdopen(r, closefd=False) as f:
                 tests = [l.strip() for l in f.readlines()]
             if process.wait() != 0:
-                raise RuntimeError("Failed to collect tests.")
+                raise TestCollectionError("Failed to collect tests.")
             return tests
         finally:
             os.closerange(r, w)
