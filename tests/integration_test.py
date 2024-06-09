@@ -11,11 +11,13 @@ HERE = Path(__file__).parent
 
 
 def _standalone_caller(
-    failing_test: str, collect_options: str, run_options: str
+    failing_test: str, collect_options: str, run_options: str, stdout: bool = False
 ) -> Tuple[str, int]:
     args = ["pytest-bisect-tests", "--failing-test", failing_test]
     if collect_options:
         args.extend(["--collect-options", collect_options])
+    if stdout:
+        args.append("--stdout")
     if run_options:
         args.extend(["--run-options", run_options])
 
@@ -91,3 +93,26 @@ def test_should_work_with_items_modifying_plugins(plugin_caller: PluginCaller) -
 
     assert "Faulty test: integration_data/test_groups_test.py::test_faulty" in out
     assert code == 0
+
+def test_cli_should_communicate_stdout_argument() -> None:
+    out, code = _standalone_caller(
+        failing_test="integration_data/collection_error.py::test_non_existing_fixture",
+        collect_options="",
+        run_options="collection_error.py",
+    )
+
+    assert code == 1
+    assert "Failed to collect tests. Use --stdout to see the output from pytest test collection." in out
+
+
+def test_cli_should_show_output_from_collection_with_stdout() -> None:
+    out, code = _standalone_caller(
+        failing_test="integration_data/collection_error.py::test_non_existing_fixture",
+        collect_options="",
+        run_options="collection_error.py",
+        stdout=True,
+    )
+
+    assert code == 1
+    assert "Exception: This is a test collection error" in out
+    assert "Failed to collect tests. Consult output from pytest." in out
