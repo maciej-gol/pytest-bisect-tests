@@ -92,7 +92,7 @@ tomli==2.0.1
     #   pip-tools
     #   pyproject-hooks
     #   pytest
-twine==5.0.0
+twine==5.1.0
     # via -r requirements.in
 urllib3==2.2.0
     # via
