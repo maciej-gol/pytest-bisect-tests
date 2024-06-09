@@ -7,7 +7,7 @@ packages = ["pytest_bisect_tests"]
 
 [project]
 name = "pytest-bisect-tests"
-version = "0.2.0"
+version = "0.3.0"
 authors = [{ name = "Maciej Gol", email = "suchar.kroolik1@gmail.com" }]
 description = "Find tests leaking state and affecting other"
 readme = "README.md"
