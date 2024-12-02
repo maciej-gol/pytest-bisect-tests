@@ -25,9 +25,7 @@ exceptiongroup==1.2.0
 idna==3.6
     # via requests
 importlib-metadata==7.0.1
-    # via
-    #   keyring
-    #   twine
+    # via keyring
 iniconfig==2.0.0
     # via pytest
 jaraco-classes==3.3.1
@@ -50,6 +48,7 @@ packaging==23.2
     # via
     #   build
     #   pytest
+    #   twine
 pip-tools==7.4.1
     # via -r requirements.in
 pkginfo==1.9.6
@@ -92,7 +91,7 @@ tomli==2.0.1
     #   pip-tools
     #   pyproject-hooks
     #   pytest
-twine==5.1.1
+twine==6.0.1
     # via -r requirements.in
 urllib3==2.2.0
     # via
